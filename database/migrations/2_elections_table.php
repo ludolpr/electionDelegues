@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('elections', function (Blueprint $table) {
             $table->id('id_election');
             $table->string('name_election');
-            $table->string('decription_election');
-            $table->boolean('sign_up_candidate');
+            $table->string('decription');
+            $table->unsignedBigInteger('number_voters');
+            $table->unsignedBigInteger('number_votes');
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('zipcode', 5);
             $table->string('town');
             $table->string('picture');
+            $table->date('birthday');
             $table->rememberToken();
             $table->timestamps();
         });
