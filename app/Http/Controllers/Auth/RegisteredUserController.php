@@ -29,15 +29,28 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        $request->validate(['firstname' => ['required', 'string', 'max:50'],
+            'lastname' => ['required', 'string', 'max:50'],
+            'pseudonym' => ['nullable', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'address' => ['required', 'string', 'max:255'],
+            'zipcode' => ['required', 'string', 'max:5'],
+            'town' => ['required', 'string', 'max:255'],
+            'picture' => ['nullable', 'string', 'max:255'],
+            'birthday' => ['required', 'date'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
+
+        $user = User::create(['firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'pseudonym' => $request->pseudonym,
             'email' => $request->email,
+            'address' => $request->address,
+            'zipcode' => $request->zipcode,
+            'town' => $request->town,
+            'picture' => $request->picture,
+            'birthday' => $request->birthday,
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,6 +58,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('/'));
     }
 }

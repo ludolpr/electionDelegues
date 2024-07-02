@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'id_vote';
+
     protected $fillable = [
         'sign_up_vote',
     ];

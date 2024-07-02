@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
-            $table->string('fistname');
+            $table->string('firstname');
             $table->string('lastname');
-            $table->string('pseudonym');
+            $table->string('pseudonym')->nullable();
             $table->string('password');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('adress');
-            $table->decimal('zipcode', 5);
+            $table->string('address');
+            $table->string('zipcode', 5);
             $table->string('town');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->date('birthday');
             $table->rememberToken();
             $table->timestamps();
@@ -36,12 +36,15 @@ return new class extends Migration
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+
+            $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
+        
     }
 
     /**

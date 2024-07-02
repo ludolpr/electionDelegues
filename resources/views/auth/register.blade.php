@@ -13,6 +13,7 @@
             <x-input-error :messages="$errors->get('firstname')" class="mt-2 text-[#E63946]" />
         </div>
 
+        <!-- Last Name -->
 
         <div class="flex items-center">
             <x-input-label for="lastname" :value="__('Prénom')" class="text-[#070044] mr-2" />
@@ -27,7 +28,7 @@
         <!-- Pseudonym -->
         <div class="mt-4">
             <x-input-label for="pseudonym" :value="__('Pseudo')" class="text-[#070044]" />
-            <x-text-input id="pseudonym" class="block mt-1 w-full border border-[#2EC7E6] focus:ring focus:ring-[#2EC7E6]" type="text" name="pseudonym" :value="old('pseudonym')" required autocomplete="pseudonym" />
+            <x-text-input id="pseudonym" class="block mt-1 w-full border border-[#2EC7E6] focus:ring focus:ring-[#2EC7E6]" type="text" name="pseudonym" :value="old('pseudonym')" />
             <x-input-error :messages="$errors->get('pseudonym')" class="mt-2 text-[#E63946]" />
         </div>
 
@@ -78,7 +79,7 @@
         <!-- Picture -->
         <div class="mt-4">
             <x-input-label for="picture" :value="__('Photo de profil')" class="text-[#070044]" />
-            <x-text-input id="picture" class="block mt-1 w-full border border-[#2EC7E6] focus:ring focus:ring-[#2EC7E6]" type="file" name="picture" :value="old('picture')" required autocomplete="picture" />
+            <x-text-input id="picture" class="block mt-1 w-full border border-[#2EC7E6] focus:ring focus:ring-[#2EC7E6]" type="file" name="picture" :value="old('picture')" />
             <x-input-error :messages="$errors->get('picture')" class="mt-2 text-[#E63946]" />
         </div>
 
