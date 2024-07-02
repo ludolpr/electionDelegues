@@ -17,8 +17,9 @@
                 <a class="text-white" href="/">Accueil</a>
                 <div>
                     <ul class="flex space-x-4">
-                        <li><a href="#" class="text-white hover:text-gray-200">Candidats</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">Voter</a></li>
+                        <li><a href="/candidates" class="text-white hover:text-gray-200">Candidats</a></li>
+                        <li><a href="/votes" class="text-white hover:text-gray-200">Voter</a></li>
+                        <li><a href="/elections" class="text-white hover:text-gray-200">Election</a></li>
                         <li><a href="#" class="text-white hover:text-gray-200">Résultats</a></li>
                         @guest
                         <li><a href="{{ route('register') }}" class="text-white hover:text-gray-200">S'enregistrer</a>
@@ -61,17 +62,22 @@
         <!-- Footer -->
         <footer class="bg-[#070044] p-4 text-white text-center">
             <p>Informations de contact</p>
-            <div class="flex justify-center space-x-4">
+            <div class="flex justify-center space-x-4 mt-4">
                 <!-- Social media icons -->
-                <a href="#" class="bg-[#2EC7E6] p-2 rounded-full">
-                    <img src="path/to/social-icon1.png" alt="Social Icon 1" class="w-6 h-6">
+                <a href="#" class="bg-[#2EC7E6] p-2 rounded-full flex items-center justify-center w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
                 </a>
-                <a href="#" class="bg-[#2EC7E6] p-2 rounded-full">
-                    <img src="path/to/social-icon2.png" alt="Social Icon 2" class="w-6 h-6">
+                <a href="#" class="bg-[#2EC7E6] p-2 rounded-full flex items-center justify-center w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
                 </a>
                 <!-- Add more icons as needed -->
             </div>
         </footer>
+
     </div>
 </body>
 

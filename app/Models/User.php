@@ -28,7 +28,20 @@ class User extends Authenticatable
         'picture',
         'birthday',
     ];
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'id_role');
+    }
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'id_user');
+    }
+
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class, 'id_user');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

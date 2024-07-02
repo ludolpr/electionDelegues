@@ -2,7 +2,7 @@
 @section('content')
 <!-- Header -->
 <header class="bg-[#E0E2DB] p-4">
-    <h1 class="text-center text-4xl font-bold">Élections de Délégués 2024</h1>
+    <h1 class="text-center text-4xl font-bold">Élections de Délégués Arinfo</h1>
 </header>
 
 

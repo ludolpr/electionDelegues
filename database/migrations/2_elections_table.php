@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('elections', function (Blueprint $table) {
             $table->id('id_election');
             $table->string('name_election');
-            $table->string('decription');
+            $table->string('description');
             $table->unsignedBigInteger('number_voters');
             $table->unsignedBigInteger('number_votes');
             $table->timestamps();
