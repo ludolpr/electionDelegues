@@ -14,23 +14,38 @@
     <div id="app" class="flex flex-col h-screen">
         <nav class="bg-[#070044] p-4">
             <div class="container mx-auto flex justify-between items-center">
-                <a class="text-white" href="/">Accueil</a>
-                <div>
+                <a class="text-white text-xl font-bold" href="/">Accueil</a>
+                <div class="relative">
                     <ul class="flex space-x-4">
-                        <li><a href="/candidates" class="text-white hover:text-gray-200">Candidats</a></li>
-                        <li><a href="/votes" class="text-white hover:text-gray-200">Voter</a></li>
-                        <li><a href="/elections" class="text-white hover:text-gray-200">Election</a></li>
-                        <li><a href="#" class="text-white hover:text-gray-200">Résultats</a></li>
+                        <li><a href="#" class="text-white hover:text-gray-200 font-medium">Résultats</a></li>
                         @guest
-                        <li><a href="{{ route('register') }}" class="text-white hover:text-gray-200">S'enregistrer</a>
-                        </li>
-                        <li><a href="{{ route('login') }}" class="text-white hover:text-gray-200">Se connecter</a></li>
+                        <li><a href="{{ route('register') }}" class="text-white hover:text-gray-200 font-medium">S'enregistrer</a></li>
+                        <li><a href="{{ route('login') }}" class="text-white hover:text-gray-200 font-medium">Se
+                                connecter</a></li>
                         @else
-                        <li>
-                            <span class="text-white">{{ Auth::user()->pseudo }}</span>
+                        @if(Auth::user() && Auth::user()->id_role == 1)
+                        <li><a href="{{ route('candidates.create') }}" class="text-white hover:text-gray-200 font-medium">Candidats</a></li>
+                        <li><a href="/votes" class="text-white hover:text-gray-200 font-medium">Voter</a></li>
+                        @endif
+                        @if(Auth::user() && Auth::user()->id_role == 2)
+                        <li class="relative group">
+                            <a href="#" class="text-white hover:text-gray-200 font-medium">Classes</a>
+                            <ul class="absolute hidden group-hover:block bg-[#070044] text-white space-y-2 rounded-lg shadow-lg p-2 row">
+                                <li><a href="{{ route('classrooms.create') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Créer une Classe</a></li>
+                                <li><a href="{{ route('classrooms.index') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Voir les Classes</a></li>
+                            </ul>
                         </li>
+                        <li class="relative group">
+                            <a href="#" class="text-white hover:text-gray-200 font-medium">Élections</a>
+                            <ul class="absolute hidden group-hover:block bg-[#070044] text-white space-y-2 rounded-lg shadow-lg p-2">
+                                <li><a href="{{ route('elections.create') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Créer une Élection</a></li>
+                                <li><a href="{{ route('elections.index') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Voir les Élections</a></li>
+                            </ul>
+                        </li>
+                        @endif
+                        <li><span class="text-white font-semibold">{{ Auth::user()->pseudonym }}</span></li>
                         <li>
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-white hover:text-gray-200">Déconnexion</a>
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="text-white hover:text-gray-200 font-medium">Déconnexion</a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                                 @csrf
                             </form>
@@ -43,11 +58,16 @@
 
         <main class="flex-grow">
             <div class="container mx-auto px-4">
+                @if (session()->has('success'))
+                <div class="alert alert-success text-[#070044] p-4 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+                @endif
                 @if (session()->has('message'))
                 <p class="alert alert-success">{{ session()->get('message') }}</p>
                 @endif
                 @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger bg-red-500 text-white p-4 rounded mb-4">
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>

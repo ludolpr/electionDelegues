@@ -9,7 +9,13 @@ class Vote extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_election', 'id_candidate', 'id_user'];
+    protected $primaryKey = 'id_vote';
+
+    protected $fillable = [
+        'id_election',
+        'id_candidate',
+        'id_user',
+    ];
 
     public function election()
     {

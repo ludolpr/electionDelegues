@@ -1,29 +1,21 @@
 <?php
 
-// App/Models/Candidate.php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Candidate extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['id_user'];
+    protected $primaryKey = 'id_candidate';
+    protected $fillable = ['id_user', 'id_election'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function elections()
+    public function election()
     {
-        return $this->belongsToMany(Election::class, 'elect_candidate', 'id_candidate', 'id_election');
-    }
-
-    public function votes()
-    {
-        return $this->hasMany(Vote::class, 'id_candidate');
+        return $this->belongsTo(Election::class, 'id_election');
     }
 }

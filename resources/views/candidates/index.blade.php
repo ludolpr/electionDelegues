@@ -1,40 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="text-center mb-4">Liste des Candidats</h2>
-            <div class="text-center mt-4 mb-3">
-                <a href="{{ route('candidates.create') }}" class="btn bg-[#2EC7E6] text-white">Ajouter un Candidat</a>
-            </div>
-            @if(session()->get('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
-            @endif
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-                @foreach($candidates as $candidate)
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $candidate->name }}</h5>
-                            <p class="card-text">{{ $candidate->description }}</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="{{ route('candidates.edit', $candidate->id) }}" class="btn btn-sm btn-light">
-                                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" alt="Edit" style="width: 20px; height: 20px;">
-                            </a>
-                            <form action="{{ route('candidates.destroy', $candidate->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm bg-[#070044] text-white">Supprimer</button>
-                            </form>
-                        </div>
-                    </div>
+<div class="container mx-auto my-10 px-4">
+    <div class="flex justify-center">
+        <div class="w-full max-w-lg">
+            <h2 class="text-2xl font-bold text-center mb-6" style="color: #070044;">S'inscrire en tant que Candidat</h2>
+            <form method="POST" action="{{ route('candidates.store', $election->id_election) }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                @csrf
+                <div class="mb-4">
+                    <label for="id_user" class="block text-[#070044] text-sm font-bold mb-2">Utilisateur</label>
+                    <input type="hidden" id="id_user" name="id_user" value="{{ Auth::user()->id_user }}">
+                    <p class="shadow appearance-none border border-[#070044] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}
+                    </p>
                 </div>
-                @endforeach
-            </div>
+                <div class="mb-4">
+                    <label for="election" class="block text-[#070044] text-sm font-bold mb-2">Élection</label>
+                    <p class="shadow appearance-none border border-[#070044] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        {{ $election->name_election }}
+                    </p>
+                    <input type="hidden" id="id_election" name="id_election" value="{{ $election->id_election }}">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="bg-[#2EC7E6] hover:bg-[#1BB6D1] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">S'inscrire</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

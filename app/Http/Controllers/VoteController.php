@@ -2,64 +2,75 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\vote;
+use App\Models\Vote;
+use App\Models\Election;
+use App\Models\Candidate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 
 class VoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $votes = Vote::with('user', 'candidate', 'election')->get();
+        return view('votes.index', compact('votes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $elections = Election::all();
+        $candidates = Candidate::all();
+        return view('votes.create', compact('elections', 'candidates'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'id_election' => 'required|exists:elections,id_election',
+            'id_candidate' => 'required|exists:candidates,id_candidate',
+        ]);
+
+        Vote::create([
+            'id_user' => Auth::id(),
+            'id_election' => $request->id_election,
+            'id_candidate' => $request->id_candidate,
+        ]);
+
+        return redirect()->route('votes.index')->with('success', 'Vote enregistré avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(vote $vote)
+    public function show(Vote $vote)
     {
-        //
+        return view('votes.show', compact('vote'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(vote $vote)
+    public function edit(Vote $vote)
     {
-        //
+        $elections = Election::all();
+        $candidates = Candidate::all();
+        return view('votes.edit', compact('vote', 'elections', 'candidates'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, vote $vote)
+    public function update(Request $request, Vote $vote): RedirectResponse
     {
-        //
+        $request->validate([
+            'id_election' => 'required|exists:elections,id_election',
+            'id_candidate' => 'required|exists:candidates,id_candidate',
+        ]);
+
+        $vote->update([
+            'id_election' => $request->id_election,
+            'id_candidate' => $request->id_candidate,
+        ]);
+
+        return redirect()->route('votes.index')->with('success', 'Vote mis à jour avec succès.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(vote $vote)
+    public function destroy(Vote $vote): RedirectResponse
     {
-        //
+        $vote->delete();
+
+        return redirect()->route('votes.index')->with('success', 'Vote supprimé avec succès.');
     }
 }

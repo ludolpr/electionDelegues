@@ -2,24 +2,25 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Election extends Model
 {
-    use HasFactory;
     protected $primaryKey = 'id_election';
-    
-    protected $fillable = [
-        'name_election', 'description', 'number_voters', 'number_votes'
-    ];
-    public function votes()
+    protected $fillable = ['name_election', 'description', 'id_class', 'number_votes', 'number_voters'];
+
+    public function classroom()
     {
-        return $this->hasMany(Vote::class, 'id_election');
+        return $this->belongsTo(Classroom::class, 'id_class');
     }
 
     public function candidates()
     {
-        return $this->belongsToMany(Candidate::class, 'elect_candidate', 'id_election', 'id_candidate');
+        return $this->hasMany(Candidate::class, 'id_election');
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class, 'id_election');
     }
 }

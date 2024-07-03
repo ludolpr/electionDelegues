@@ -13,19 +13,24 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('pseudonym')->nullable();
+            $table->string('firstname', 50);
+            $table->string('lastname', 50);
+            $table->string('pseudonym', 255)->nullable();
             $table->string('password');
-            $table->string('email')->unique();
+            $table->string('email', 150)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('address');
+            $table->string('address', 200);
             $table->string('zipcode', 5);
-            $table->string('town');
+            $table->string('town', 255);
             $table->string('picture')->nullable();
             $table->date('birthday');
+            $table->unsignedBigInteger('id_class')->nullable();
+            $table->unsignedBigInteger('id_role')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('id_class')->references('id_class')->on('classrooms')->onDelete('set null');
+            $table->foreign('id_role')->references('id_role')->on('roles')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -44,7 +49,6 @@ return new class extends Migration
 
             $table->foreign('user_id')->references('id_user')->on('users')->onDelete('cascade');
         });
-        
     }
 
     /**
@@ -52,8 +56,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

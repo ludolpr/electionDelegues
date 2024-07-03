@@ -1,31 +1,34 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <h2 class="text-center mb-4">Modifier l'Élection</h2>
-            <form method="POST" action="{{ route('elections.update', $election->id) }}">
+<div class="container mx-auto my-10 px-4">
+    <div class="flex justify-center">
+        <div class="w-full max-w-lg">
+            <h2 class="text-2xl font-bold text-center mb-6" style="color: #070044;">Modifier l'Élection</h2>
+            <form method="POST" action="{{ route('elections.update', $election->id_election) }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 @csrf
                 @method('PUT')
-                <div class="mb-3">
-                    <label for="name_election" class="form-label">Nom de l'élection</label>
-                    <input type="text" class="form-control" id="name_election" name="name_election" value="{{ $election->name_election }}" required>
+                <div class="mb-4">
+                    <label for="name_election" class="block text-[#070044] text-sm font-bold mb-2">Nom de
+                        l'élection</label>
+                    <input type="text" class="shadow appearance-none border border-[#070044] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name_election" name="name_election" value="{{ $election->name_election }}" required>
                 </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" required>{{ $election->description }}</textarea>
+                <div class="mb-4">
+                    <label for="description" class="block text-[#070044] text-sm font-bold mb-2">Description</label>
+                    <textarea class="shadow appearance-none border border-[#070044] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="description" name="description" rows="3" required>{{ $election->description }}</textarea>
                 </div>
-                <div class="mb-3">
-                    <label for="number_voters" class="form-label">Nombre d'électeurs</label>
-                    <input type="number" class="form-control" id="number_voters" name="number_voters" value="{{ $election->number_voters }}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="number_votes" class="form-label">Nombre de votes</label>
-                    <input type="number" class="form-control" id="number_votes" name="number_votes" value="{{ $election->number_votes }}" required>
+                <div class="mb-4">
+                    <label for="id_class" class="block text-[#070044] text-sm font-bold mb-2">Classe</label>
+                    <select id="id_class" name="id_class" class="shadow appearance-none border border-[#070044] rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        @foreach($classes as $class)
+                        <option value="{{ $class->id_class }}" {{ $election->id_class == $class->id_class ? 'selected' : '' }}>{{ $class->name_class }}
+                        </option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn bg-[#2EC7E6] text-white">Mettre à jour</button>
+                    <button type="submit" class="bg-[#2EC7E6] hover:bg-[#1BB6D1] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Mettre
+                        à jour</button>
                 </div>
             </form>
         </div>

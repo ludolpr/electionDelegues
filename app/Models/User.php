@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,7 +9,9 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
     protected $primaryKey = 'id_user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,21 +28,40 @@ class User extends Authenticatable
         'town',
         'picture',
         'birthday',
+        'id_class',
+        'id_role' 
     ];
+
+   
     public function role()
     {
         return $this->belongsTo(Role::class, 'id_role');
     }
+
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class, 'id_class');
+    }
+
 
     public function votes()
     {
         return $this->hasMany(Vote::class, 'id_user');
     }
 
+ 
     public function candidates()
     {
         return $this->hasMany(Candidate::class, 'id_user');
     }
+
+
+    public function elections()
+    {
+        return $this->hasMany(Election::class, 'id_user');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -53,15 +73,12 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 }
