@@ -8,13 +8,12 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('candidates', function (Blueprint $table) {
-            $table->id('id_candidate');
+        Schema::create('voters', function (Blueprint $table) {
+            $table->id('id_voter');
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_election');
             $table->timestamps();
 
-            // Ajouter les contraintes de clé étrangère
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('id_election')->references('id_election')->on('elections')->onDelete('cascade');
         });
@@ -22,6 +21,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('candidates');
+        Schema::dropIfExists('voters');
     }
 };

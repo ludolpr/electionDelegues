@@ -17,20 +17,20 @@
                 <a class="text-white text-xl font-bold" href="/">Accueil</a>
                 <div class="relative">
                     <ul class="flex space-x-4">
-                        <li><a href="#" class="text-white hover:text-gray-200 font-medium">Résultats</a></li>
+                        <li><a href="{{ route('votes.allResults') }}" class="text-white hover:text-gray-200 font-medium">Résultats</a></li>
                         @guest
                         <li><a href="{{ route('register') }}" class="text-white hover:text-gray-200 font-medium">S'enregistrer</a></li>
                         <li><a href="{{ route('login') }}" class="text-white hover:text-gray-200 font-medium">Se
                                 connecter</a></li>
                         @else
-                        @if(Auth::user() && Auth::user()->id_role == 1)
+                        @if(Auth::user() && Auth::user()->id_role == 1 && !session('isCandidateOrVoter'))
                         <li><a href="{{ route('candidates.create') }}" class="text-white hover:text-gray-200 font-medium">Candidats</a></li>
-                        <li><a href="/votes" class="text-white hover:text-gray-200 font-medium">Voter</a></li>
                         @endif
-                        @if(Auth::user() && Auth::user()->id_role == 2)
+                        @if(Auth::user() && Auth::user()->id_role == 1)
+                        <li><a href="{{ route('votes.create') }}" class="text-white hover:text-gray-200 font-medium">Voter</a></li>
                         <li class="relative group">
                             <a href="#" class="text-white hover:text-gray-200 font-medium">Classes</a>
-                            <ul class="absolute hidden group-hover:block bg-[#070044] text-white space-y-2 rounded-lg shadow-lg p-2 row">
+                            <ul class="absolute hidden group-hover:block bg-[#070044] text-white space-y-2 rounded-lg shadow-lg p-2">
                                 <li><a href="{{ route('classrooms.create') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Créer une Classe</a></li>
                                 <li><a href="{{ route('classrooms.index') }}" class="block hover:bg-gray-700 rounded-md px-4 py-2">Voir les Classes</a></li>
                             </ul>
@@ -55,6 +55,7 @@
                 </div>
             </div>
         </nav>
+
 
         <main class="flex-grow">
             <div class="container mx-auto px-4">

@@ -8,7 +8,6 @@
             <thead>
                 <tr>
                     <th class="py-2 px-4 bg-gray-100">Nom de la Classe</th>
-                    <th class="py-2 px-4 bg-gray-100">Nombre d'Élèves</th>
                     <th class="py-2 px-4 bg-gray-100">Actions</th>
                 </tr>
             </thead>
@@ -16,10 +15,9 @@
                 @foreach($classrooms as $classroom)
                 <tr>
                     <td class="border px-4 py-2">{{ $classroom->name_class }}</td>
-                    <td class="border px-4 py-2">{{ $classroom->users_count }}</td>
-                    <td class="border px-4 py-2">
-                        <a href="{{ route('classrooms.show', $classroom) }}" class="bg-[#070044] hover:bg-gray-200 hover:text-[#070044] text-white text-white font-bold py-2 px-4 rounded">Voir</a>
-                        <a href="{{ route('classrooms.edit', $classroom) }}" class="bg-[#070044] hover:bg-gray-200 hover:text-[#070044] text-white text-white font-bold py-2 px-4 rounded">Éditer</a>
+                    <td class="border px-4 py-2 flex space-x-2 justify-center  ">
+                        <a href="{{ route('classrooms.show', $classroom) }}" class="bg-[#070044] hover:bg-gray-200 hover:text-[#070044] text-white font-bold py-2 px-4 rounded">Voir</a>
+                        <a href="{{ route('classrooms.edit', $classroom) }}" class="bg-[#070044] hover:bg-gray-200 hover:text-[#070044] text-white font-bold py-2 px-4 rounded">Éditer</a>
                         <form action="{{ route('classrooms.destroy', $classroom) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')

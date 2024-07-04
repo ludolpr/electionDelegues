@@ -23,7 +23,7 @@
             @else
             <ul class="list-disc list-inside">
                 @foreach($election->candidates as $candidate)
-                <li>{{ $candidate->user->name }}</li>
+                <li>{{ $candidate->user->firstname }} {{ $candidate->user->lastname }}</li>
                 @endforeach
             </ul>
             @endif
@@ -34,7 +34,7 @@
             <form action="{{ route('elections.destroy', $election->id_election) }}" method="POST" class="inline">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="bg-gray-300 hover:bg-red-500 text-gray-700 text-black py-1 px-3 rounded-lg">Supprimer</button>
+                <button type="submit" class="bg-gray-300 hover:bg-red-500 text-gray-700 py-1 px-3 rounded-lg">Supprimer</button>
             </form>
         </div>
     </div>
